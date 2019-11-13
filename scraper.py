@@ -9,7 +9,9 @@ class Scraper:
     self.session = requests.session()
 
   def download(self):
-    login_url = 'https://app.timetrade.com/tc/login.do?cmd=direct&process=login&process2=login&entry=Select&level=&urlstring=spainconsulchicago&step=Signin&method=login&userName=<REDACTED>&password=<REDACTED>'
+    username = '<REDACTED>'
+    password = '<REDACTED>'
+    login_url = 'https://app.timetrade.com/tc/login.do?cmd=direct&process=login&process2=login&entry=Select&level=&urlstring=spainconsulchicago&step=Signin&method=login&userName={}&password={}'.format(username, password)
     page = self.session.get(login_url);
     # print(page)
     if page.status_code == 200:
@@ -37,7 +39,9 @@ class Scraper:
     print(self.session)
 
     soup = BeautifulSoup(page.content, 'html.parser')
-    print(soup.prettify)
+    print(soup.prettify())
+    print(soup.find_all('font', class_='f24b'))
+    print(soup.find_all('font', class_='f24b')[0].get_text().strip())
     
     # payload = {
     #   "userName": "<REDACTED>",
